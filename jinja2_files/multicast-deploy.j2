@@ -1,0 +1,6 @@
+{%- for multicast in Variables %}
+
+ip pim rp-address {{ multicast.RP_Address }} group-list {{ multicast.Group_List }} bidir
+{%- if multicast.SSM_Range %}
+ip pim ssm range {{ multicast.SSM_Range }} {%- endif %}
+{%- endfor %}

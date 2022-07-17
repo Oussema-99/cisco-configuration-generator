@@ -1,0 +1,21 @@
+{%- for interface in Variables %}
+
+interface {{ interface.Name }}
+  {%- if "ethernet" in interface.Name.lower() %}
+  no switchport {%- endif %}
+  {%- if interface.VRF %}
+  vrf member {{ interface.VRF }} {%- endif %}
+  {%- if interface.IP %}
+  ip address {{ interface.IP }} {%- endif %}
+  {%- if interface.Anycast_GW == "on" %}
+  fabric forwarding mode anycast-gateway {%- endif %}
+  {%- if interface.IP_Forward == "on" %}
+  ip forward {%- endif %}
+  {%- if interface.OSPF_Process %}
+  ip router ospf {{ interface.OSPF_Process }} area {{ interface.OSPF_Area }} {%- endif %}
+  {%- if interface.PIM == "on" %}
+  ip pim sparse-mode {%- endif %}
+  {%- if interface.MTU %}
+  mtu {{ interface.MTU }} {%- endif %}
+  no shutdown
+{%- endfor %}

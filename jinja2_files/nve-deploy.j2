@@ -1,0 +1,14 @@
+{%- for nve in Variables %}
+
+interface nve{{ nve.ID }}
+  no shutdown
+  host-reachability protocol bgp
+  source-interface {{ nve.Source }}
+{%- for l3_vni in nve.L3_VNI.splitlines()%}
+  member vni {{ l3_vni }} associate-vrf  {%- endfor %}
+{%- for i in range(nve.L2_VNI.splitlines()|length) %}
+  member vni {{ nve.L2_VNI.splitlines()[i] }}
+    suppress-arp
+    mcast-group {{ nve.Multicast_Group.splitlines()[i] }}
+{%- endfor %}
+{% endfor %}

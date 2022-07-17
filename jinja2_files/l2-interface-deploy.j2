@@ -1,0 +1,17 @@
+{%- for interface in Variables %}
+
+interface {{ interface.Name }}
+  {%- if interface.Mode == "Access" %}
+  switchport mode access
+  switchport access vlan {{ interface.VLANs }}  {%- endif %}
+  {%- if interface.Mode == "Trunk" %}
+  switchport mode trunk
+  switchport trunk allowed vlan {{ interface.VLANs }}  {%- endif %}
+  {%- if interface.Mode == "Add_Vlan" %}
+  switchport trunk allowed vlan add {{ interface.VLANs }}  {%- endif %}
+  {%- if interface.STP_Edge == "on" %}
+  spanning-tree port type edge  {%- endif %}
+  {%- if interface.MTU %}
+  mtu {{ interface.MTU }} {%- endif %}
+  no shutdown
+{%- endfor %}

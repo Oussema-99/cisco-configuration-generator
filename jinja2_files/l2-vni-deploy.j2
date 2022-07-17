@@ -1,0 +1,10 @@
+{%- for vni in Variables %}
+
+vlan {{ vni.VLAN }}
+  vn-segment {{ vni.VNI }}
+evpn
+  vni {{ vni.VNI }} l2
+    rd {{ vni.RD }}
+    route-target import {{ vni.RT_import }}
+    route-target export {{ vni.RT_export }}
+{%- endfor %}

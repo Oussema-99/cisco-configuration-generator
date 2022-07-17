@@ -1,0 +1,21 @@
+{%- for generic in Variables %}
+nv overlay evpn
+feature ospf
+feature bgp
+feature pim
+feature interface-vlan
+feature vn-segment-vlan-based
+feature nv overlay
+
+
+{%- if generic.Hostname %}
+hostname {{ generic.Hostname }}  {%- endif %}
+{%- if generic.Anycast_GW_MAC %}
+fabric forwarding anycast-gateway-mac {{ generic.Anycast_GW_MAC }}  {%- endif %}
+{%- if generic.MTU %}
+system jumbomtu {{ generic.MTU }}  {%- endif %}
+{%- if generic.OSPF_Process %}
+router ospf {{ generic.OSPF_Process }} {%- endif %}
+  {%- if generic.OSPF_Process %}
+  router-id {{ generic.OSPF_R_ID }} {%- endif %}
+{%- endfor %}

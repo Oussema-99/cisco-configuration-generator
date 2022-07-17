@@ -1,0 +1,17 @@
+{%- for vni in Variables %}
+
+vlan {{ vni.VLAN }}
+  vn-segment {{ vni.VNI }}
+vrf context {{ vni.VRF }}
+  vni {{ vni.VNI }}
+  rd {{ vni.RD }}
+  address-family {{ vni.Address_Family }} unicast
+    route-target import {{ vni.RT_import }}
+    route-target import {{ vni.RT_import }} evpn
+    route-target export {{ vni.RT_export }}
+    route-target export {{ vni.RT_export }} evpn
+{%- if vni.Spine == "yes" %}
+evpn
+  vni {{ vni.VNI }} l2
+    rd {{ vni.RD }} {%- endif %}
+{%- endfor %}

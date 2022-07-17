@@ -1,0 +1,11 @@
+{%- for bgp in Variables %}
+
+router bgp {{ bgp.Process_BGP }}
+{%- if bgp.VRF %}
+vrf {{ bgp.VRF}} {%- endif %}
+  address-family {{ bgp.Address_Family }}
+    {%- for prefix in bgp.Prefix.splitlines() %}
+    network {{ prefix }} {%- endfor %}
+    {%- if bgp.Advertise_l2vpn == "on" %}
+    advertise l2vpn evpn  {%- endif %}
+{%- endfor %}

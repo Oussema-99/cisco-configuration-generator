@@ -1,0 +1,17 @@
+{%- for bgp in Variables %}
+
+router bgp {{ bgp.Process_BGP }}
+{%- if bgp.VRF %}
+vrf {{ bgp.VRF}} {%- endif %}
+{%- if bgp.Retain_RT == "on" %}
+  address-family l2vpn evpn
+    retain route-target all {%- endif %}
+  neighbor {{ bgp.Neighbor }} remote-as {{ bgp.Remote_as }}
+    {%- if bgp.Update_Source %}
+    update-source {{ bgp.Update_Source }} {%- endif %}
+    address-family {{ bgp.Address_Family }}
+     {%- if bgp.Send_Community == "on" %}
+     send-community both {%- endif %}
+     {%- if bgp.Reflector_Client == "on" %}
+     route-reflector-client {%- endif %}
+{%- endfor %}
