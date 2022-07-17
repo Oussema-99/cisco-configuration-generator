@@ -1,4 +1,4 @@
 from functions import excel_pull
 
-
-excel_pull("excel_files/VRF.xlsm")
+excel_file_name = "VxLAN_EVPN.xlsm"
+excel_pull(f"excel_files/{excel_file_name}")
