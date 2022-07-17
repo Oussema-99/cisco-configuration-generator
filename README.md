@@ -13,9 +13,9 @@ To explains how this Script works, there is an Example in "example/" which conta
 	
 Note: For the script to work correctly make sure that:
 	1) The excel file is configured correctly and is stored under "excel_files/"
-	2) "output/" directly is created in the root of the project
+	2) "output/" is created in the root of the project
 	3) Do NOT edit the jinja2 files unless you know what you're doing
 
-Have fun!
+Good luck!
 	
 	
